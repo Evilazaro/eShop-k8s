@@ -1,0 +1,17 @@
+services:
+  redis:
+    container_name: redis
+    image: redis:7.4
+
+  eventbus:
+    container_name: eventbus
+    image: rabbitmq:4.0-management
+
+  postgres:
+    container_name: postgres
+    image: ankane/pgvector:latest
+
+
+
+
+

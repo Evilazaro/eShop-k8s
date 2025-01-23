@@ -1,0 +1,40 @@
+services:
+  redis:
+    networks:
+      - eshop
+    ports:
+      - "6379:6379"
+
+  eventbus:
+    environment:
+      - RABBITMQ_DEFAULT_PASS=senha@123
+      - RABBITMQ_DEFAULT_USER=guest
+      - HOSTNAME=eventbus
+    networks:
+      - eshop
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  postgres:
+    networks:
+      - eshop
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yourWeak(!)Password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  eshop:
+    name: eshop
+    driver: bridge
+
+
+volumes:
+  postgres_data:
+    name: postgres_data
+    driver: local
