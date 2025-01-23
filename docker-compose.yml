@@ -1,12 +1,13 @@
 services:
   redis:
-    image: redis
-    
+    container_name: redis
+    image: redis:7.4
+
+  eventbus:
+    container_name: eventbus
+    image: rabbitmq:4.0-management
 
 
 
 
 
-networks:
-  eshop:
-    driver: bridge
