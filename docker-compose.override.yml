@@ -7,7 +7,7 @@ services:
 
   eventbus:
     environment:
-      - RABBITMQ_DEFAULT_PASS=senha@123
+      - RABBITMQ_DEFAULT_PASS=zhputScZZ3m2dQctv1q0xU
       - RABBITMQ_DEFAULT_USER=guest
       - HOSTNAME=eventbus
     networks:
@@ -49,6 +49,21 @@ services:
       #- ~/.aspnet/https:/https:ro
       - identity-api-data:/https:ro
 
+
+  catalog-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+      - ASPNETCORE_HTTP_PORTS=57985
+      - ASPNETCORE_URLS=http://localhost:57985
+      - ConnectionStrings__eventbus=amqp://guest:zhputScZZ3m2dQctv1q0xU@eventbus:5672
+      - EventBus__SubscriptionClientName=Catalog
+    networks:
+      - eshop
+    ports:
+      - 57985:8080
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
 
 networks:
   eshop:
