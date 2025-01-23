@@ -19,3 +19,14 @@ services:
       dockerfile: src/Identity.API/Dockerfile
     depends_on:
       - postgres
+  
+  catalog-api:
+    container_name: catalog-api
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: src/Catalog.API/Dockerfile
+    depends_on:
+      - eventbus
+      - postgres
+
