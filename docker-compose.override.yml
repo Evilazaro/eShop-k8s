@@ -28,13 +28,41 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  identity-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_HTTPS_PORTS=5001
+      - ASPNETCORE_URLS=http://+:5000;https://+:5001
+      - DOTNET_LAUNCH_PROFILE=https
+      - LOGGING__CONSOLE__FORMATTERNAME=simple
+      - DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION=true
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=senha@123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identity.pfx
+    networks:
+      - eshop
+    ports:
+      - "5000:5000"  # Expose port 5000 for HTTP
+      - "5001:5001"  # Expose port 5001 for HTTPS
+    volumes:
+      #- ~/.aspnet/https:/https:ro
+      - identity-api-data:/https:ro
+
+
 networks:
   eshop:
     name: eshop
     driver: bridge
 
-
 volumes:
   postgres_data:
     name: postgres_data
     driver: local
+  identity-api-data:
+    name: identity-api
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/.aspnet/https
+      o: bind
