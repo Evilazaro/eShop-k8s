@@ -7,6 +7,10 @@ services:
     container_name: eventbus
     image: rabbitmq:4.0-management
 
+  postgres:
+    container_name: postgres
+    image: ankane/pgvector:latest
+
 
 
 
