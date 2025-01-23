@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis
+    
+
+
+
+
+
+networks:
+  eshop:
+    driver: bridge
